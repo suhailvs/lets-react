@@ -34,11 +34,27 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-      <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" type="password" />
-      <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
-    </form>
+    <div className="row">
+      <div className="col-md-4 offset-md-4">
+        <form onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          <div className="mb-3 row">
+            <label className="col-sm-2 col-form-label">Username</label>
+            <div className="col-sm-10">
+              <input className="form-control" value={email} onChange={e => setEmail(e.target.value)} placeholder="Username" />
+            </div>
+          </div>
+          <div className="mb-3 row">
+            <label className="col-sm-2 col-form-label">Password</label>
+            <div className="col-sm-10">
+              <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+            </div>
+          </div>
+          <button type="submit" className="btn btn-success" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
+        </form>
+      </div>
+    </div>
+
+
   );
 }

@@ -1,11 +1,11 @@
-import { logout } from '../utils/auth';
+// import { logout } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = () => {    
+    localStorage.removeItem('user');
     navigate('/login');
   };
 
