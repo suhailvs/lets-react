@@ -3,8 +3,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
-
+import { useNavigate } from 'react-router-dom';
 function App() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
   return (
     <div className="container">
 
@@ -16,6 +21,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
+              <button onClick={handleLogout}>Logout</button>
               <Dashboard />
             </PrivateRoute>
           }

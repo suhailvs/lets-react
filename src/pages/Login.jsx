@@ -13,19 +13,14 @@ export default function Login() {
     setLoading(true);
     try {
       const data = await loginUser(email, password);
-      console.log(data)
-      // You can store token or user info
       localStorage.setItem('user', JSON.stringify(data));
       navigate('/dashboard');
     } catch (err) {
       if (err.response) {
-        // Server responded with a status outside 2xx
         console.log(err.response.data || 'Login failed. Please try again.');
       } else if (err.request) {
-        // Request made, but no response received
         alert('No response from server. Check your network.');
       } else {
-        // Something else went wrong
         alert('An unexpected error occurred.');
       }
     } finally {
@@ -54,7 +49,5 @@ export default function Login() {
         </form>
       </div>
     </div>
-
-
   );
 }
