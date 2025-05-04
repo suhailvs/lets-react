@@ -1,14 +1,11 @@
 // import { logout } from '../utils/auth';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import API from '../utils/api';
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
 
-  const API = axios.create({
-    baseURL: 'https://suhailvs.pythonanywhere.com/api/v1', // replace with your backend URL
-  });
 
   useEffect(() => {
     fetchUsers();
@@ -17,9 +14,9 @@ export default function Dashboard() {
 
   const fetchUsers = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem('user'))['key'];
-      console.log(token)
-      API.defaults.headers.common['Authorization'] = `Token ${token}`;
+      // const token = JSON.parse(localStorage.getItem('user'))['key'];
+      // console.log(token)
+      // API.defaults.headers.common['Authorization'] = `Token ${token}`;
       const response = await API.get(`/users/`);
       setUsers(response.data);
     } catch (err) {

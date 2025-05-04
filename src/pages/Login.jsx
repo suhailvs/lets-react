@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/api';
+import API from '../utils/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -12,8 +12,9 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = await loginUser(email, password);
-      localStorage.setItem('user', JSON.stringify(data));
+      const response = await API.post('/login/', { username:email, password });
+      localStorage.setItem('user', JSON.stringify(response.data));
+      API.defaults.headers.common['Authorization'] = `Token ${response.data['key']}`;
       navigate('/dashboard');
     } catch (err) {
       if (err.response) {

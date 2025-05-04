@@ -4,7 +4,8 @@ const API = axios.create({
   baseURL: 'https://suhailvs.pythonanywhere.com/api/v1', // replace with your backend URL
 });
 
-export const loginUser = async (email, password) => {
-  const response = await API.post('/login/', { username:email, password });
-  return response.data;
-};
+const user_data = JSON.parse(localStorage.getItem('user'))
+if (user_data) {
+  API.defaults.headers.common['Authorization'] = `Token ${user_data['key']}`;
+}
+export default API;
