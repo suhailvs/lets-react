@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { register } from '../utils/auth';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
@@ -8,13 +7,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = e => {
-    e.preventDefault();
-    if (register(email, password)) {
-      alert('Registration successful. Please login.');
-      navigate('/login');
-    } else {
-      alert('User already exists');
-    }
+    
   };
 
   return (
