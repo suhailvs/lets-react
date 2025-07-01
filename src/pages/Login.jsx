@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../utils/api';
-
+import { AuthContext } from '../utils/AuthContext';
+import { useContext } from 'react';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const { isAuthenticated, login } = useContext(AuthContext);
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
     try {
       const response = await API.post('/login/', { username:email, password });
-      localStorage.setItem('user', JSON.stringify(response.data));
+      login(JSON.stringify(response.data))
+      // localStorage.setItem('user', JSON.stringify(response.data));
       API.defaults.headers.common['Authorization'] = `Token ${response.data['key']}`;
       navigate('/dashboard');
     } catch (err) {

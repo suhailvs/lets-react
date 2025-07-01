@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { useContext } from 'react';
+import { AuthContext } from '../utils/AuthContext';
 
 
 export default function Nav() {
-    
+    const { isAuthenticated, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const getUser = () => {
@@ -13,7 +14,8 @@ export default function Nav() {
     };
 
     const handleLogout = () => {
-      localStorage.removeItem('user');
+    //   localStorage.removeItem('user');
+    logout();
       navigate('/login');
     };
 
