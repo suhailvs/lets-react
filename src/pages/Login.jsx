@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);

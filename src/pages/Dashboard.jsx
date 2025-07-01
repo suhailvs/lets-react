@@ -3,12 +3,22 @@ import {Link} from "react-router-dom";
 import API from '../utils/api';
 
 export default function Dashboard() {
+  const [balance, setBalance] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [authuser, setAuthUser] = useState({});
+
   useEffect(() => {
+    getAuthUser();
+    fetchBalance();
     fetchUsers();
+    
   }, []);
 
+  const getAuthUser = () => {
+      const user = localStorage.getItem('user');
+      setAuthUser(user ? JSON.parse(user) : null);
+    };
   const fetchUsers = async () => {
     setLoading(true);
     try {
@@ -27,16 +37,24 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+  const fetchBalance = async () => {    
+    try {
+        const response = await API.get('/ajax/?purpose=userbalance');
+        setBalance(response.data['data']);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
   const listItems = users.map((user) =>
-    <div className="col-6 col-md-3 mb-4" key={user.id}>
+    <div className="col-3 mb-4" key={user.id}>
       <div className="media">
         <Link to={`/user/${user.id}`}>
           <img className="img-thumbnail mr-3" src={user.thumbnail ? user.thumbnail: 'https://suhailvs.pythonanywhere.com/media/cache/b7/cd/b7cdabf632c979dc828e8ace16c462ac.jpg'} 
             alt="" />
         </Link>
         <div className="media-body">
-         <Link to={`/user/${user.id}`}>{user.username}</Link><br />
-          Balance: <strong>{user.balance}</strong><br />
+         {/* <Link to={`/user/${user.id}`}>{user.username}</Link><br />
+          Balance: <strong>{user.balance}</strong><br /> */}
           {user.first_name}
         </div>
       </div>
@@ -44,7 +62,9 @@ export default function Dashboard() {
   );
   return (
     <>
-      <h2>Welcome to the Dashboard!</h2>
+      <h3>Hi {authuser.firstname}, welcome to {authuser.exchange_name} exchange.</h3>
+      <h2>Your Balance: {balance != null ? `${balance}`:'****'}</h2>
+      <hr />
       {loading==true ? (<div>loading...</div>): (<div className="row">{listItems}</div>)}      
     </>
   );
