@@ -25,7 +25,11 @@ export default function User() {
   <div>
     User: {userid}
     {loading==true ? (<div>loading...</div>): (
-      <div>£ {user.balance ?? 0}</div>
+      <div>
+        <img className="img-thumbnail mr-3" src={user.image}/>
+        £ {user.balance ?? 0}
+      
+      </div>
     )}      
   </div>
   )

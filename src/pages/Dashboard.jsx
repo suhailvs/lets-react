@@ -30,9 +30,10 @@ export default function Dashboard() {
   const listItems = users.map((user) =>
     <div className="col-6 col-md-3 mb-4" key={user.id}>
       <div className="media">
-        <a href="#">
-          <img className="mr-3" src={user.thumbnail} alt="" />
-        </a>
+        <Link to={`/user/${user.id}`}>
+          <img className="img-thumbnail mr-3" src={user.thumbnail ? user.thumbnail: 'https://suhailvs.pythonanywhere.com/media/cache/b7/cd/b7cdabf632c979dc828e8ace16c462ac.jpg'} 
+            alt="" />
+        </Link>
         <div className="media-body">
          <Link to={`/user/${user.id}`}>{user.username}</Link><br />
           Balance: <strong>{user.balance}</strong><br />
